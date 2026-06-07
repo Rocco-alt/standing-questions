@@ -154,7 +154,7 @@ All effectiveness evidence is first-party and N-of-1. No controlled comparison e
 Clone this repo somewhere (the examples below assume it sits next to your project — adjust the `../standing-questions` paths if yours doesn't):
 
 ```
-git clone https://github.com/<you>/standing-questions
+git clone https://github.com/Rocco-alt/standing-questions
 cd path/to/your-project
 ```
 
