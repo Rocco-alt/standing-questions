@@ -75,6 +75,15 @@ python ../standing-questions/metrics/acknowledge_without_rederive.py context/red
 
 (Run from your project root; the paths assume the standing-questions clone sits next to your project, as in the main README's Quickstart — adjust if yours doesn't.) Both exit non-zero when they find the failure they look for, so they slot into any CI as-is.
 
+## Treat the skill as code
+
+The skill is an instruction file that will sit in your agent's context with your repo's trust level. Give it a dependency's lifecycle:
+
+- **Review before install.** It's ~40 lines; read all of it. Do the same for any skill from anyone.
+- **Pin and diff.** Your installed copy never auto-updates. When you take a new version, read the diff first — [CHANGELOG.md](../CHANGELOG.md) says what changed and why.
+- **Scan it — especially after you modify it.** Snyk's free [Skill Inspector](https://labs.snyk.io/experiments/skill-scan/) scans skill folders in the browser. Scanners are detectors, not guarantees, and generic injection scanners can false-positive on instruction-dense files — weigh findings against your own read. Threat model: [SECURITY.md](../SECURITY.md).
+- **Version your question store too.** `context/standing_questions.json` is human-owned configuration: change it in deliberate, reviewed commits. The metrics' history is only meaningful while question ids stay stable.
+
 ## Other harnesses
 
 Nothing here is Claude-specific. The skill file is four numbered steps of plain English plus two JSON files — port it to any agent harness that can read files, run `git rev-parse HEAD`, and append a line of JSON to a log.

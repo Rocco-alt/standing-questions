@@ -173,7 +173,7 @@ Copy-Item ..\standing-questions\examples\standing_questions.json context\
 ```
 
 1. **Edit the questions** to point at *your* ground truth. Delete what doesn't apply. Twelve is plenty.
-2. **Install the skill** (Claude Code) — see [skill/README.md](skill/README.md). Or port the four steps to any harness: they're plain English plus one JSON line per session. The first skill run creates `context/rederive_log.jsonl`; until then the metrics have nothing to read.
+2. **Install the skill** (Claude Code) — see [skill/README.md](skill/README.md). Or port the four steps to any harness: they're plain English plus one JSON line per session. The first skill run creates `context/rederive_log.jsonl`; until then the metrics have nothing to read. Treat the skill like a dependency — review it, pin it, re-scan it if you change it ([SECURITY.md](SECURITY.md)).
 3. **Run the metrics** occasionally, or in CI — they live in the clone, your data lives in your project:
 
 ```
@@ -191,6 +191,8 @@ To see everything working against the shipped sample data first, run the metrics
 README.md                              this file - the pattern
 BLOG.md                                the field story: ten weeks, ~300 sessions, two Goodhart incidents
 LICENSE                                MIT
+SECURITY.md                            threat model, scan policy, reporting
+CHANGELOG.md                           versioned history (semver)
 schema/standing_questions.schema.json  JSON Schema (draft 2020-12) for the question store
 schema/rederive_entry.schema.json      JSON Schema (draft 2020-12) for one log line
 examples/standing_questions.json       generic 12-question seed set
