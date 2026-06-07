@@ -43,7 +43,7 @@ Where does the project currently lie to itself - where do the recorded notes dis
 The protocol: at the start of every session, the agent re-derives the answer to each question *against the current repo* — reads the actual files, runs the actual commands — diffs the fresh answer against what the project previously believed, appends one line to an append-only JSONL log, and tells us every delta out loud before doing anything else. The log line records, per question: an id, a timestamp, and a `delta` boolean, plus the repo's HEAD sha at derivation time:
 
 ```json
-{"ts": "...", "kind": "rederive", "sid": "s03", "repo_head_sha": "c1d4f0a...", "results": [{"q_id": "q4", "last_rederived_ts": "...", "delta": true, "note": "s02 handoff claims rate limiter 'done'; no test covers the burst path"}]}
+{"ts": "...", "kind": "rederive", "sid": "s03", "repo_head_sha": "c1d4f0a...", "results": [{"q_id": "q4", "last_rederived_ts": "...", "delta": true, "note": "s02 handoff claims rate limiter 'done'; no test covers the burst path - evidence does not support the claim, reopened"}]}
 ```
 
 A stored answer is wrong the moment reality moves. A stored question is never wrong; it's at worst unasked — and "unasked" turns out to be detectable, which is the part of this story we care most about.

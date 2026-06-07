@@ -44,7 +44,7 @@ Two small files in your project, plus a four-step session-start ritual.
   "questions": [
     {"id": "q1", "q": "What is the current deployment target and which file or config pins it?", "importance": 3, "evidence_hint": "deploy config in repo root / CI workflow files"},
     {"id": "q2", "q": "What is the test command and does it actually run green right now?", "importance": 3, "evidence_hint": "package manifest scripts / CI config; run it, do not trust the last claim"},
-    {"id": "q4", "q": "What did the last session claim was done, and is there externally-produced evidence for it?", "importance": 3}
+    {"id": "q4", "q": "What did the last session claim was done, and is there externally-produced evidence for it?", "importance": 3, "evidence_hint": "handoff doc 'Done' section vs tests, diffs, CI output"}
   ]
 }
 ```
