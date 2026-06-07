@@ -6,7 +6,7 @@ A memory pattern for long-horizon AI-agent projects — the kind where a coding 
 
 Answers rot. Questions self-heal — not because the question changes, but because re-asking it forces the answer to be rebuilt from reality every time.
 
-This repo ships the pattern as: a write-up (this file), two JSON Schemas, a generic 12-question seed set, a sample re-derivation log, an installable Claude Code skill, and two stdlib-only Python metrics that detect the pattern's own failure modes. Everything runs on Windows, macOS, and Linux. No dependencies.
+This repo ships the pattern as: a write-up (this file), two JSON Schemas, a generic 12-question seed set, a sample re-derivation log, an installable Claude Code skill, and two stdlib-only Python metrics that detect the pattern's own failure modes. Everything runs on Windows, macOS, and Linux. No dependencies. The field story behind the pattern lives at [standingquestions.com](https://standingquestions.com).
 
 ---
 
@@ -14,7 +14,7 @@ This repo ships the pattern as: a write-up (this file), two JSON Schemas, a gene
 
 Every persistent-memory scheme for coding agents — `CLAUDE.md` notes, handoff documents, memory databases, knowledge graphs — converges on storing *facts*: point-in-time answers. Facts decay the moment the repo moves, and nothing announces the decay. The note that says "tests run green via `npm test`" is not wrong the day it's written; it's wrong three weeks later, and it *looks identical* either way.
 
-The incident that motivated this pattern, from a production project where a coding agent worked one repo across hundreds of sessions — roughly 300 over ten weeks, by my count [observed, first-party]: a milestone was marked **done**. The "done" marker survived every subsequent handoff-file rewrite, because each session honestly copied forward what the previous session recorded. Five sessions later an audit found the milestone was 2-of-4 on its own completion criteria. No session had lied. Every session had trusted a stored answer instead of re-checking it — and the audit only happened because a human got suspicious and asked.
+The incident that motivated this pattern, from a production project where a coding agent worked one repo across hundreds of sessions — roughly 300 over ten weeks, by our count [observed, first-party]: a milestone was marked **done**. The "done" marker survived every subsequent handoff-file rewrite, because each session honestly copied forward what the previous session recorded. Five sessions later an audit found the milestone was 2-of-4 on its own completion criteria. No session had lied. Every session had trusted a stored answer instead of re-checking it — and the audit only happened because a human got suspicious and asked.
 
 The stored answer was the problem. The *question* — "is this milestone actually complete against its written criteria?" — was as valid on day one as on day forty. It just wasn't stored anywhere that would force anyone to re-ask it.
 
@@ -131,7 +131,7 @@ And one structural boundary: **this is a curated index layer, not the memory its
 
 ## Prior art
 
-The parts are old; the assembly is, to the best of my knowledge, new. Nearest neighbors first — and if you know something closer, please open an issue, I will name it here.
+The parts are old; the assembly is, to the best of our knowledge, new. Nearest neighbors first — and if you know something closer, please open an issue, we will name it here.
 
 - **Architecture fitness functions** (Ford, Parsons & Kua, *Building Evolutionary Architectures*, 2017; ArchUnit) — the closest software-engineering ancestor. A small, durable, human-authored set of assertions re-evaluated continuously against the current codebase, surfacing architectural drift. The differences: fitness functions are binary assertions with hard-coded expectations, where standing questions are open questions whose free-form answers are re-derived and *diffed*; and fitness functions have no analogue of the staleness or ritualization metrics, because CI executes them deterministically — an agent executing a ritual is exactly the part that can't be trusted, which is what the metrics are for.
 - **Mainstream agent memory, as the foil** (MemGPT/Letta, Mem0, Zep, A-MEM, and most of the 2024–2026 ecosystem). The prevailing paradigm extracts salient *facts* from interactions and persists them so the agent can stop re-deriving. This pattern is a deliberate inversion of that, for the narrow class of load-bearing project state where a stale answer is worse than a recomputed one. The two coexist: fact memory for cheap recall of stable things, standing questions for the dozen beliefs that must never silently rot.
@@ -145,7 +145,7 @@ What's claimed as new here is the specific assembly, under a name: durable human
 
 ## Provenance
 
-This pattern ran for ten weeks across roughly 300 sessions of a production ML project before this release [observed, first-party, N-of-1]. The original implementation was much heavier — 28 questions, per-derivation evidence-path hashes, judge-gated commits, an out-of-band evaluator process. Most of that weight turned out to be where the Goodhart incidents lived. What this repo ships is the lean kernel that survived contact: two files, four steps, two metrics. The longer story, with numbers and the incident reports, is in [BLOG.md](BLOG.md).
+This pattern ran for ten weeks across roughly 300 sessions of a production ML project before this release [observed, first-party, N-of-1]. The original implementation was much heavier — 28 questions, per-derivation evidence-path hashes, judge-gated commits, an out-of-band evaluator process. Most of that weight turned out to be where the Goodhart incidents lived. What this repo ships is the lean kernel that survived contact: two files, four steps, two metrics. The longer story, with numbers and the incident reports, is in [BLOG.md](BLOG.md), also published at [standingquestions.com](https://standingquestions.com).
 
 All effectiveness evidence is first-party and N-of-1. No controlled comparison exists. The claim this repo stands behind is the mechanism and its measurability, not a benchmark number.
 
@@ -203,6 +203,10 @@ metrics/acknowledge_without_rederive.py  metric 2 (ritualization detector)
 metrics/test_staleness.py              tests for metric 1 (stdlib unittest)
 metrics/test_acknowledge_without_rederive.py  tests for metric 2 (stdlib unittest)
 ```
+
+## Authors
+
+Standing Questions comes out of the development and research collaboration of [Dr Raj Kadiwar](https://www.linkedin.com/in/raj-kadiwar/) and [Krishna Kadiwar](https://www.linkedin.com/in/krishnajk/).
 
 ## License
 
