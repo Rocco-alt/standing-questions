@@ -1,0 +1,78 @@
+{
+  "_schema": "standing_questions/v1",
+  "_note": "Durable QUESTIONS, not answers. Re-derived at session start against the current repo. Answers rot; questions self-heal. Re-derivation results are recorded in context/rederive_log.jsonl (kind=rederive), never here. Question text is human-owned: agents do not add, edit, or retire questions.",
+  "questions": [
+    {
+      "id": "q1",
+      "q": "What is the current deployment target and which file or config pins it?",
+      "importance": 3,
+      "evidence_hint": "deploy config in repo root / CI workflow files"
+    },
+    {
+      "id": "q2",
+      "q": "What is the test command and does it actually run green right now?",
+      "importance": 3,
+      "evidence_hint": "package manifest scripts / CI config; run it, do not trust the last claim"
+    },
+    {
+      "id": "q3",
+      "q": "What is the single most load-bearing module and what is its public contract?",
+      "importance": 3,
+      "evidence_hint": "imports graph / the module everything else calls into"
+    },
+    {
+      "id": "q4",
+      "q": "What did the last session claim was done, and is there externally-produced evidence for it?",
+      "importance": 3,
+      "evidence_hint": "handoff doc 'Done' section vs tests, diffs, CI output"
+    },
+    {
+      "id": "q5",
+      "q": "What open thread from a prior session is still unresolved?",
+      "importance": 2,
+      "evidence_hint": "handoff doc 'Open threads' section / issue tracker"
+    },
+    {
+      "id": "q6",
+      "q": "What invariant, if broken silently, would hurt real users?",
+      "importance": 3,
+      "evidence_hint": "data integrity, auth boundaries, money paths, irreversible writes"
+    },
+    {
+      "id": "q7",
+      "q": "Where does the project currently lie to itself - where do the recorded notes disagree with repo reality?",
+      "importance": 2,
+      "evidence_hint": "diff handoff/README claims against the actual code and test output"
+    },
+    {
+      "id": "q8",
+      "q": "Which written-down rule has the agent violated recently despite it being written down?",
+      "importance": 2,
+      "evidence_hint": "project instructions file vs recent session behavior / recent diffs"
+    },
+    {
+      "id": "q9",
+      "q": "Is any always-loaded context file over its size budget?",
+      "importance": 1,
+      "evidence_hint": "line counts of the instructions and handoff files vs their declared caps"
+    },
+    {
+      "id": "q10",
+      "q": "Has the model or harness changed since last session, and did any apparatus go stale because of it?",
+      "importance": 2,
+      "evidence_hint": "model id vs the one recorded in the last rederive entry; harness changelog"
+    },
+    {
+      "id": "q11",
+      "q": "What is the riskiest irreversible action likely this session, and does it need owner sign-off?",
+      "importance": 3,
+      "evidence_hint": "planned work touching migrations, deletions, deploys, external publishing"
+    },
+    {
+      "id": "q12",
+      "q": "Which part of the context system is earning its keep, and which part is pure tax?",
+      "importance": 1,
+      "evidence_hint": "which recorded artifacts were actually read or acted on in recent sessions"
+    }
+  ]
+}

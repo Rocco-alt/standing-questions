@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:standing-questions:schema:standing-questions:v1",
+  "title": "Standing questions store",
+  "description": "The durable question store. Questions, not answers. Answers live in the rederive log (see rederive_entry.schema.json) and are treated as a disposable cache over the repo. The question text is human-owned: agents re-derive answers; they do not add, edit, or retire questions.",
+  "type": "object",
+  "required": ["_schema", "questions"],
+  "properties": {
+    "_schema": {
+      "const": "standing_questions/v1"
+    },
+    "_note": {
+      "type": "string",
+      "description": "Free-text reminder of the protocol for humans and agents reading the file raw."
+    },
+    "questions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "q", "importance"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]*$",
+            "description": "Stable identifier. Never reused, even after the question is retired."
+          },
+          "q": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The question, phrased so it can be re-derived against current repo state — it should name or imply where ground truth lives."
+          },
+          "importance": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3,
+            "description": "3 = re-derive every session without exception; 2 = re-derive most sessions; 1 = re-derive when relevant or when stale."
+          },
+          "status": {
+            "enum": ["active", "retired"],
+            "default": "active",
+            "description": "Retired questions stay in the file for the audit trail; agents skip them."
+          },
+          "evidence_hint": {
+            "type": "string",
+            "description": "Optional pointer to where the answer is usually derived from (a path, a command). A hint, not a contract — re-derivation must follow current reality even when the hint goes stale."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

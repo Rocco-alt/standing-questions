@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:standing-questions:schema:rederive-entry:v1",
+  "title": "Rederive log entry",
+  "description": "One JSON object per line in context/rederive_log.jsonl, appended once per session after re-deriving the standing questions against the current repo. This is the recording layer that makes the staleness and acknowledge-without-rederive metrics computable. The log is append-only; entries are never edited or deleted.",
+  "type": "object",
+  "required": ["ts", "kind", "sid", "repo_head_sha", "results"],
+  "properties": {
+    "ts": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this rederivation pass ran (ISO 8601)."
+    },
+    "kind": {
+      "const": "rederive",
+      "description": "Discriminator. Tools that share this file with other entry kinds must skip lines whose kind is not 'rederive'."
+    },
+    "sid": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Session identifier. One rederive entry per session is the protocol; mid-session re-grounding passes reuse the same sid."
+    },
+    "repo_head_sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{7,40}$",
+      "description": "git rev-parse HEAD at rederivation time. This is what makes the acknowledge-without-rederive detector computable: all-delta:false is only suspicious when HEAD moved."
+    },
+    "results": {
+      "type": "array",
+      "minItems": 1,
+      "description": "One result per question actually re-derived this session. Questions not re-derived are simply absent — their absence is what the staleness metric counts.",
+      "items": {
+        "type": "object",
+        "required": ["q_id", "last_rederived_ts", "delta"],
+        "properties": {
+          "q_id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "id of the question in the standing questions store."
+          },
+          "last_rederived_ts": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When this question was last actually re-derived — normally equal to the entry's ts."
+          },
+          "delta": {
+            "type": "boolean",
+            "description": "true if re-derivation produced a materially different answer than the previously recorded one; false if the answer is unchanged. First-ever derivation of a question records delta:false with a note."
+          },
+          "note": {
+            "type": "string",
+            "description": "What changed (for delta:true) or anything worth recording. The reference protocol (skill) treats a missing note on a delta:true result as a protocol violation; this schema cannot express that constraint, so it remains optional here. Never quote secrets in a note — the log is typically committed and never pruned."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
