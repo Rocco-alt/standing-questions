@@ -17,7 +17,7 @@ For every question with status `active`, derive a fresh answer against the CURRE
 
 ## Step 3 — Record
 
-Append exactly ONE line to `context/rederive_log.jsonl` (create the file if missing; never edit or delete existing lines). It must match `schema/rederive_entry.schema.json`:
+Append exactly ONE line to `context/rederive_log.jsonl` (create the file if missing; never edit or delete existing lines). It must match the shape below (the formal contract is `schema/rederive_entry.schema.json` in the standing-questions repo — not a file in your project):
 
 ```json
 {"ts": "<ISO-8601 now>", "kind": "rederive", "sid": "<sid from step 1>", "repo_head_sha": "<sha from step 1>", "results": [{"q_id": "q1", "last_rederived_ts": "<ISO-8601 now>", "delta": false}, {"q_id": "q2", "last_rederived_ts": "<ISO-8601 now>", "delta": true, "note": "what changed"}]}

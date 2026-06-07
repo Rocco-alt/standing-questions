@@ -69,11 +69,11 @@ To make the ritual harder to skip, add one line to your project's `CLAUDE.md`:
 Note what that line is and is not: it is advisory, not enforcement. The agent can still skip it or go through the motions — which is exactly why the log exists and why you should run the two metrics (see [`metrics/`](../metrics/)) from time to time, or wire them into CI:
 
 ```
-python metrics/staleness.py context/rederive_log.jsonl --questions context/standing_questions.json
-python metrics/acknowledge_without_rederive.py context/rederive_log.jsonl
+python ../standing-questions/metrics/staleness.py context/rederive_log.jsonl --questions context/standing_questions.json
+python ../standing-questions/metrics/acknowledge_without_rederive.py context/rederive_log.jsonl
 ```
 
-Both exit non-zero when they find the failure they look for, so they slot into any CI as-is.
+(Run from your project root; the paths assume the standing-questions clone sits next to your project, as in the main README's Quickstart — adjust if yours doesn't.) Both exit non-zero when they find the failure they look for, so they slot into any CI as-is.
 
 ## Other harnesses
 
